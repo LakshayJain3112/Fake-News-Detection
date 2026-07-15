@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+<h1>Prediction Result</h1>
+<div class="badge {{ card_class }}"></div>
+<div class="news-preview">
+    <h2>News Submitted</h2>
+    <h3>Title</h3>
+    <p>{{ title }}</p>
+    <h3>Article</h3>
+    <div class="article-box">
+        {{ article }}
+    </div>
+</div>
+<div class="recommendation">
+    <h2>AI Recommendation</h2>
+    {% if "Verified" in final_verdict %}
+    <p>✅ This news is supported by multiple trusted sources and Google News.</p>
+    {% elif "Supported" in final_verdict %}
+    <p>🟢 This news appears genuine and is supported by trusted sources.</p>
+    {% elif "Disagree" in final_verdict %}
+    <p>🟡 Mixed evidence found. Please verify before sharing.</p>
+    {% else %}
+    <p>🔴 This article may contain misleading or fake information.</p>
+    {% endif %}
+</div>
+<div class="result-card {{ card_class }}">
+    <h1>
+    {% if result == "REAL NEWS" or result == "VERIFIED REAL NEWS" %}
+    <i class="fa-solid fa-circle-check"></i>
+    {% else %}
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    {% endif %}
+    {{ result }}
+    </h1>
+    <h2 style="margin-top: 10px;color: #00ff99;"></h2>
+    <h3>Confidence : {{ confidence }} %</h3>
+    <h3>Hybrid Score : {{ hybrid_score }}/100</h3>
+    <h3>Prediction Time : {{ predict_time }}sec</h3>
+    <div class="source-box">
+    <h3>Trusted Sources Found: {{ trusted_count }}</h3>
+    <h3>Google News Articles: {{ google_count }}</h3>
+    <h3>Total Articles: {{ total_articles }}</h3>
+    <h3>📰 Source Verification</h3>
+    <p><strong>Source:</strong> {{ source_name }}</p>
+    <p><strong>Published:</strong> {{ published_at }}</p>
+    <a href="{{ article_url }}" target="_blank" class="news-link">
+        🔗 Read Original Article
+    </a>
+    </div>
+    <h2 class="ml-heading">ML Prediction</h2>
+    <h3>Real News Probability</h3>
+    <div class="progress-bar">
+        <div class="progress real-progress"
+             style="width: {{ real_probability }}%;">
+             {{ real_probability }}%
+        </div>
+    </div>
+    <br>
+    <h3>Fake News Probability</h3>
+    <div class="progress-bar">
+        <div class="progress fake-progress"
+             style="width: {{ fake_probability }}%;">
+             {{ fake_probability }}%
+        </div>
+    </div>
+</div>
+<a href="/" class="back">Check Another News</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TruthLens AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<div id="loader" class="loader-container">
+<div class="loader"></div>
+<p>Analyzing News...</p>
+</div>
+<script>
+function showLoader(){
+document.getElementById("loader").style.display="flex";
+}
+</script>
+<body>
+<div class="container">
+    <button id="theme-btn" onclick="toggleTheme()"> Dark Mode </button>
+<h1>TruthLens AI</h1>
+<h3>AI Powered Fake News Detection</h3>
+<form action="/predict" method="POST" onsubmit="showLoader()">
+<label><b>News Title</b></label>
+<input type="text" name="title" placeholder="Enter News Title" required>
+<br><br>
+<label><b>News Article</b></label>
+<textarea name="article" placeholder="Paste your news article here..."required></textarea>
+<br><br>
+<button type="submit">
+Analyze News
+</button>
+</form>
+</div>
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+}
+</script>
+</body>
+</html>
